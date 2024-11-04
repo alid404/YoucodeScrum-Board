@@ -1,4 +1,3 @@
-// Variables Global
 const AddTask = document.getElementById("AddTask");
 const poppup = document.getElementById("modal-task");
 const ClosingPoppup = document.getElementById("IconClosePoppup");
@@ -15,13 +14,12 @@ const TheTitleInput = document.getElementById("exampleInputEmail1");
 const TodoTaskCount = document.getElementById("to-do-tasks-count");
 let radioSelected, prioritySelected;
 
-// Create The Main ID in our localStorage if not exist
+
 if (localStorage.getItem("id") == null) {
   localStorage.setItem("id", 0);
 }
 
-///////////////////////////////  Global Functions  ///////////////////////////////////////////
-//----------------- The Submit Button Mode(Disable , Enable ) Function ---------------------//
+//The Submit Button Mode(Disable , Enable ) Function//
 poppup.addEventListener("input", (e) => {
   if (e.target.id === "exampleInputEmail1" || e.target.id === "floatingTextarea") {
     let Value = e.target.value;
@@ -34,7 +32,7 @@ poppup.addEventListener("input", (e) => {
   }
 });
 
-//----------------- The radio check Selected ---------------------//
+//The radio check Selected //
 function RadioChecked() {
   if (document.getElementById("flexRadioDefault1").checked === true) {
     radioSelected = "Feature";
@@ -47,7 +45,7 @@ function RadioChecked() {
   }
 }
 
-//----------------------- The PoppUp Generale Function -------------------------------------//
+//The PoppUp Generale Function//
 function PoppUp(status) {
   poppup.style.display = status;
 
@@ -104,51 +102,33 @@ function PoppUp(status) {
     `;
   }
 }
-//------------------------------------------------------------------------------------------//
 
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-//--------------------------- The PoppUp Controller ----------------------------------------//
+// The PoppUp Controller //
 // Affichage Poppup
 AddTask.onclick = () => PoppUp("flex");
-// Close The Poppup When click over Submit Button
 ClosingPoppup.onclick = () => PoppUp("none");
-// Close The Poppup When click over Cancel Button
 Cancel.onclick = () => PoppUp("none");
-//------------------------------------------------------------------------------------------//
 
-//---------------- Event to Handle Click For Add Tasks To Local Storage -------------------//
 SubmitTheTask.onclick = () => {
-  // After The User filling data and press submit this etape is checking if all fields are filled successfully
-  // And If one input is not filled its not will add to the local storage
-  // check the select options
   if (document.getElementById("floatingSelect").value === "Please Select") {
     return;
   }
   if (document.getElementById("floatingSelect2").value === "Please Select") {
     return;
   }
-  // check the date options
   if (document.getElementById("Date").value === "") {
     return;
   }
-  // check the TextArea options
   if (document.getElementById("floatingTextarea").value === "") {
     return;
   }
-  // check the Radio options with a function that returns 0 if it's not checked and 1 if checked
   if (RadioChecked() === 0) {
     return;
   } else {
-    /* 
-    This Id Variable For Get "id" Item From Local storage That Already exist,
-    and Defined by 0 as begin value
-    */
+   
     let id = parseInt(localStorage.getItem("id"));
-    // increment The Value Of The Id When the user clicked over submit button
     localStorage.setItem("id", id += 1);
 
-    // create a Task Object That include All Details Of One Task
     const Task = {
       id: id,
       title: document.getElementById("exampleInputEmail1").value,
@@ -158,20 +138,17 @@ SubmitTheTask.onclick = () => {
       date: document.getElementById("Date").value,
       comment: document.getElementById("floatingTextarea").value
     };
-    // Stock The Task Object On The Local Storage With the JSON Stringify Method For Send The
-    // Javascript Object As String to the web server And Manipulate it
     localStorage.setItem("task_" + Task.id, JSON.stringify(Task));
   }
 };
-//------------------------------------------------------------------------------------------//
 
-//---------------- Event to Handle Click For Delete Tasks From Local Storage --------------------//
+// Event to Handle Click For Delete Tasks From Local Storage //
 function RemoveWithId(id) {
   let key = "task_" + id;
   localStorage.removeItem(key);
 }
 
-//---------------- Poppup Delete Confirmation --------------------//
+//Poppup Delete Confirmation //
 function ConfirmationPoppup(id) {
   poppup.style.display = "flex";
   document.getElementById("DeleteTheTask").classList.remove("d-none");
@@ -185,7 +162,6 @@ function ConfirmationPoppup(id) {
   };
 }
 
-//------------------------------------------------------------------------------------------//
 // Declare And Define Task Counter of each Col ( Done(0) , Doing(0) , Not yet(0) )
 let CounterTodo = 0;
 let CounterDoing = 0;
@@ -198,7 +174,6 @@ for (let i = 0; i < localStorage.length; i++) {
     let Task = JSON.parse(localStorage.getItem(key));
     let TaskContainer;
 
-    // The Check For What Task Have Been Assigned To The Corresponding Column 
     if (Task.status === "Yet") {
       TodoCol.innerHTML += `
       <div id="${Task.id}" class="cardTask" style="width: 18rem;">
@@ -243,9 +218,7 @@ for (let i = 0; i < localStorage.length; i++) {
   }
 }
 
-// Update Task Function
 function UpdateTask(id) {
-  // Fetch the existing task from local storage
   const Task = JSON.parse(localStorage.getItem("task_" + id));
 
   // Populate the modal with existing task details
@@ -254,25 +227,20 @@ function UpdateTask(id) {
   document.getElementById("floatingSelect").value = Task.priority;
   document.getElementById("floatingSelect2").value = Task.status;
 
-  // Show the modal
   PoppUp("flex");
   
   // Update the event listener for the submit button
   SubmitTheTask.onclick = () => {
-    // Update the task object
     Task.title = TheTitleInput.value;
     Task.comment = document.getElementById("floatingTextarea").value;
     Task.priority = document.getElementById("floatingSelect").value;
     Task.status = document.getElementById("floatingSelect2").value;
     Task.date = document.getElementById("Date").value;
 
-    // Save the updated task back to local storage
     localStorage.setItem("task_" + id, JSON.stringify(Task));
 
-    // Close the popup
     PoppUp("none");
     
-    // Refresh the task display
     location.reload();
   };
 }
