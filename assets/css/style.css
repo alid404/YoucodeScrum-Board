@@ -1,0 +1,94 @@
+.pace {
+    display: none;
+}
+*{
+    user-select: none;
+
+}
+.main-style {
+    min-height: 100vh;
+    background: url(../img/cover/cover-scrum-board.png) no-repeat fixed;
+    background-size: 360px;
+    background-position: right bottom;
+}
+
+
+#modal-task{
+    background-color: rgba(0, 0, 0, 0.558);
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.PopUpWindow{
+    border-radius: 10px;
+    max-width: 500px;
+    height: fit-content;
+    
+}
+
+.align{
+    display: flex;
+    gap: 10px;
+    width: min-content;
+    align-self: end;
+    margin-top: 20px;
+}
+.align button{
+    padding-inline: 20px;
+}
+.align button:nth-child(1){
+    color: rgb(0, 93, 160);
+    background-color: rgb(255, 255, 255);
+}
+.cursor{
+    user-select: none;
+    cursor: pointer;
+}
+label{
+    font-size: 1.1rem;
+}
+.div1{
+    gap: 8px;
+    margin: 10px;
+}
+
+
+.Trash{
+    background-color: red;
+    display: none;
+}
+
+.panel-heading {
+    background-color: #4a90e2; 
+}
+
+.list-group {
+    background-color: #f5f7fa; 
+}
+
+.panel-inverse {
+    background-color: #9fa6ac !important;
+    color: #a8a0a0 !important; 
+}
+
+.panel-inverse .panel-heading {
+    background-color: #9fa6ac !important;
+    color: #ffffff !important;
+}
+
+.list-group-item {
+    background-color: #9fa6ac !important;
+    color: #ffffff !important;
+}
+
+.btn {
+    background-color: #24313d !important;
+    color: #ffffff !important;
+}
+
+
